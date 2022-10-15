@@ -1004,7 +1004,7 @@ So we build this macro to restore postion after code format."
     (let ((current-word (acm-backend-search-file-words-get-point-string)))
       ;; Search words if current prefix is not empty.
       (when (not (string-equal current-word ""))
-        (lsp-bridge-call-async "search_file_words_search" current-word)))
+        (lsp-bridge-call-async "search_file_words_search" current-word buffer-file-name)))
 
     (lsp-bridge-call-async "search_file_words_change_file" buffer-file-name)))
 

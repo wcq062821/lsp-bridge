@@ -55,15 +55,22 @@ class SearchFileWords:
             self.files[filepath] = set()
             self.search_words_queue.put("search_words")
     
-    def search(self, prefix: str):
-        self.search_words_thread = threading.Thread(target=lambda : self.search_words_from_files(prefix))
+    def search(self, prefix: str, file_name: str):
+        self.search_words_thread = threading.Thread(target=lambda : self.search_words_from_files(prefix, file_name))
         self.search_words_thread.start()
         
-    def search_words_from_files(self, prefix: str):
+    def search_words_from_files(self, prefix: str, file_name: str):
         try:
             all_words = set()
             for file, words in self.files.items():
                 all_words = all_words | words
+
+            current_file_words = set()
+            current_file_words = self.files[file_name]
+
+            all_words = current_file_words | all_words
+            print('file_name : ', file_name)
+            print('all_words : ', all_words)
                 
             search_candidates = self.search_word(prefix, all_words)
             candidates = []
